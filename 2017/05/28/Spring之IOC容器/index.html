@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="一.基础准备1.IoC是什么Ioc—Inversion of Control，即“控制反转”，不是什么技术，一种设计思想。 传统的Java编程中，如果应用程序需要依赖对象，需要通过new来实现。在IoC中，所有的设计好的对象都是通过容器进行控制的。下面需要理解几个问题：  谁控制谁，控制什么：IoC容器控制对象的创建。控制什么，主要是控制外部资源的获取（不仅限于对象）。 为何是反转：传统应用程序是">
+<meta name="description" content="一.基础准备IoC是什么Ioc—Inversion of Control，即“控制反转”，不是什么技术，一种设计思想。 传统的Java编程中，如果应用程序需要依赖对象，需要通过new来实现。在IoC中，所有的设计好的对象都是通过容器进行控制的。下面需要理解几个问题：  谁控制谁，控制什么：IoC容器控制对象的创建。控制什么，主要是控制外部资源的获取（不仅限于对象）。 为何是反转：传统应用程序是由我">
 <meta name="keywords" content="Java,框架,Spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring回顾之一">
 <meta property="og:url" content="http://yoursite.com/2017/05/28/Spring之IOC容器/index.html">
 <meta property="og:site_name" content="朱奥其的个人博客">
-<meta property="og:description" content="一.基础准备1.IoC是什么Ioc—Inversion of Control，即“控制反转”，不是什么技术，一种设计思想。 传统的Java编程中，如果应用程序需要依赖对象，需要通过new来实现。在IoC中，所有的设计好的对象都是通过容器进行控制的。下面需要理解几个问题：  谁控制谁，控制什么：IoC容器控制对象的创建。控制什么，主要是控制外部资源的获取（不仅限于对象）。 为何是反转：传统应用程序是">
+<meta property="og:description" content="一.基础准备IoC是什么Ioc—Inversion of Control，即“控制反转”，不是什么技术，一种设计思想。 传统的Java编程中，如果应用程序需要依赖对象，需要通过new来实现。在IoC中，所有的设计好的对象都是通过容器进行控制的。下面需要理解几个问题：  谁控制谁，控制什么：IoC容器控制对象的创建。控制什么，主要是控制外部资源的获取（不仅限于对象）。 为何是反转：传统应用程序是由我">
 <meta property="og:image" content="http://yoursite.com/image/IoC容器执行流程.png">
-<meta property="og:updated_time" content="2017-05-28T02:40:13.204Z">
+<meta property="og:updated_time" content="2017-05-28T02:53:04.246Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring回顾之一">
-<meta name="twitter:description" content="一.基础准备1.IoC是什么Ioc—Inversion of Control，即“控制反转”，不是什么技术，一种设计思想。 传统的Java编程中，如果应用程序需要依赖对象，需要通过new来实现。在IoC中，所有的设计好的对象都是通过容器进行控制的。下面需要理解几个问题：  谁控制谁，控制什么：IoC容器控制对象的创建。控制什么，主要是控制外部资源的获取（不仅限于对象）。 为何是反转：传统应用程序是">
+<meta name="twitter:description" content="一.基础准备IoC是什么Ioc—Inversion of Control，即“控制反转”，不是什么技术，一种设计思想。 传统的Java编程中，如果应用程序需要依赖对象，需要通过new来实现。在IoC中，所有的设计好的对象都是通过容器进行控制的。下面需要理解几个问题：  谁控制谁，控制什么：IoC容器控制对象的创建。控制什么，主要是控制外部资源的获取（不仅限于对象）。 为何是反转：传统应用程序是由我">
 <meta name="twitter:image" content="http://yoursite.com/image/IoC容器执行流程.png">
 
 
@@ -412,13 +412,13 @@
       
 
       
-        <h3 id="一-基础准备"><a href="#一-基础准备" class="headerlink" title="一.基础准备"></a>一.基础准备</h3><h4 id="1-IoC是什么"><a href="#1-IoC是什么" class="headerlink" title="1.IoC是什么"></a>1.IoC是什么</h4><p>Ioc—Inversion of Control，即“控制反转”，不是什么技术，一种设计思想。 传统的Java编程中，如果应用程序需要依赖对象，需要通过new来实现。在IoC中，所有的设计好的对象都是通过容器进行控制的。下面需要理解几个问题：</p>
+        <h3 id="一-基础准备"><a href="#一-基础准备" class="headerlink" title="一.基础准备"></a>一.基础准备</h3><h4 id="IoC是什么"><a href="#IoC是什么" class="headerlink" title="IoC是什么"></a>IoC是什么</h4><p>Ioc—Inversion of Control，即“控制反转”，不是什么技术，一种设计思想。 传统的Java编程中，如果应用程序需要依赖对象，需要通过new来实现。在IoC中，所有的设计好的对象都是通过容器进行控制的。下面需要理解几个问题：</p>
 <ol>
 <li>谁控制谁，控制什么：IoC容器控制对象的创建。控制什么，主要是控制外部资源的获取（不仅限于对象）。</li>
 <li>为何是反转：传统应用程序是由我们自己在对象中主动控制去直接获取依赖对象，也就是正转；而反转则是由容器来帮忙创建及注入依赖对象。为何是反转？因为容器帮我们查看和注入依赖对象，对象被动的接受依赖对象。</li>
 </ol>
-<h4 id="2-DI是什么"><a href="#2-DI是什么" class="headerlink" title="2.DI是什么"></a>2.DI是什么</h4><p>DI—Dependency Injection，即“依赖注入”：是组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。通过依赖注入我们可以简单的通过配置或者是注解，即可为目标对象注入需要的资源，完成自身的业务逻辑。</p>
-<h4 id="3-Bean的概念"><a href="#3-Bean的概念" class="headerlink" title="3.Bean的概念"></a>3.Bean的概念</h4><p>由IoC容器管理的组成应用程序的对象就叫Bean，Bean是由Spring容器（IoC容器）进行初始化，装配以及管理的对象。</p>
+<h4 id="DI是什么"><a href="#DI是什么" class="headerlink" title="DI是什么"></a>DI是什么</h4><p>DI—Dependency Injection，即“依赖注入”：是组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。通过依赖注入我们可以简单的通过配置或者是注解，即可为目标对象注入需要的资源，完成自身的业务逻辑。</p>
+<h4 id="Bean的概念"><a href="#Bean的概念" class="headerlink" title="Bean的概念"></a>Bean的概念</h4><p>由IoC容器管理的组成应用程序的对象就叫Bean，Bean是由Spring容器（IoC容器）进行初始化，装配以及管理的对象。</p>
 <h3 id="二-Spring入门"><a href="#二-Spring入门" class="headerlink" title="二.Spring入门"></a>二.Spring入门</h3><ol>
 <li>详解IoC容器</li>
 </ol>
@@ -720,7 +720,7 @@ height=86 src="//music.163.com/outchain/player?type=2&id=139774&auto=0&height=66
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-基础准备"><span class="nav-number">1.</span> <span class="nav-text">一.基础准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-IoC是什么"><span class="nav-number">1.1.</span> <span class="nav-text">1.IoC是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-DI是什么"><span class="nav-number">1.2.</span> <span class="nav-text">2.DI是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Bean的概念"><span class="nav-number">1.3.</span> <span class="nav-text">3.Bean的概念</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-Spring入门"><span class="nav-number">2.</span> <span class="nav-text">二.Spring入门</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一-基础准备"><span class="nav-number">1.</span> <span class="nav-text">一.基础准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IoC是什么"><span class="nav-number">1.1.</span> <span class="nav-text">IoC是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DI是什么"><span class="nav-number">1.2.</span> <span class="nav-text">DI是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bean的概念"><span class="nav-number">1.3.</span> <span class="nav-text">Bean的概念</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-Spring入门"><span class="nav-number">2.</span> <span class="nav-text">二.Spring入门</span></a></li></ol></div>
             
 
           </div>
