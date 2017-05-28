@@ -314,6 +314,190 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/28/Spring之IOC容器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="朱奥其">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="朱奥其的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/28/Spring之IOC容器/" itemprop="url">Spring回顾之一</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-28T10:07:18+08:00">
+                2017-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="一-基础准备"><a href="#一-基础准备" class="headerlink" title="一.基础准备"></a>一.基础准备</h3><h3 id="1-IoC是什么"><a href="#1-IoC是什么" class="headerlink" title="1.IoC是什么"></a>1.IoC是什么</h3><p>Ioc—Inversion of Control，即“控制反转”，不是什么技术，一种设计思想。 传统的Java编程中，如果应用程序需要依赖对象，需要通过new来实现。在IoC中，所有的设计好的对象都是通过容器进行控制的。下面需要理解几个问题：</p>
+<ol>
+<li>谁控制谁，控制什么：IoC容器控制对象的创建。控制什么，主要是控制外部资源的获取（不仅限于对象）。</li>
+<li>为何是反转：传统应用程序是由我们自己在对象中主动控制去直接获取依赖对象，也就是正转；而反转则是由容器来帮忙创建及注入依赖对象。为何是反转？因为容器帮我们查看和注入依赖对象，对象被动的接受依赖对象。<h3 id="2-DI是什么"><a href="#2-DI是什么" class="headerlink" title="2.DI是什么"></a>2.DI是什么</h3>DI—Dependency Injection，即“依赖注入”：是组件之间依赖关系由容器在运行期决定，形象的说，即由容器动态的将某个依赖关系注入到组件之中。通过依赖注入我们可以简单的通过配置或者是注解，即可为目标对象注入需要的资源，完成自身的业务逻辑。<h3 id="3-Bean的概念"><a href="#3-Bean的概念" class="headerlink" title="3.Bean的概念"></a>3.Bean的概念</h3>由IoC容器管理的组成应用程序的对象就叫Bean，Bean是由Spring容器（IoC容器）进行初始化，装配以及管理的对象。<h3 id="二-Spring入门"><a href="#二-Spring入门" class="headerlink" title="二.Spring入门"></a>二.Spring入门</h3></li>
+<li>详解IoC容器</li>
+</ol>
+<p>在spring中IoC容器的代表就是org.springframework.beans中的BeanFactory接口，BeanFactory提供了IoC容器的基本功能；在org.springframework.context下的ApplicationContext扩展了BeanFactory（BeanFactory继承了ListableBeanFactory接口，而ListableBeanFactory继承了BeanFactory接口），还提供了与Spring AOP的集成、国际化处理、事件的传播和提供不同层次的context实现。综上：BeanFactory提供了IoC容器的基本功能，而ApplicationContext提供了更多企业级功能的支持。<br>BeanFactory容器一览：</p>
+<blockquote>
+<p>XmlBeanFactory：BeanFactory实现，提供基本的IoC容器功能，可以从classpath或文件系统等获取资源；</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">File file = new File(&quot;fileSystemConfig.xml&quot;);</div><div class="line">Resource resource = new FileSystemResource(file);</div><div class="line">BeanFactory beanFactory = new XmlBeanFactory(resource);</div><div class="line"> </div><div class="line">Resource resource = new ClassPathResource(&quot;classpath.xml&quot;);     </div><div class="line">BeanFactory beanFactory = new XmlBeanFactory(resource);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>ClassPathXmlApplicationContext：ApplicationContext实现，从classpath获取配置文件；</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">BeanFactory beanFactory = new ClassPathXmlApplicationContext(&quot;classpath.xml&quot;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>FileSystemXmlApplicationContext：ApplicationContext实现，从文件系统获取配置文件。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">BeanFactory beanFactory = new FileSystemXmlApplicationContext(&quot;fileSystemConfig.xml&quot;);</div></pre></td></tr></table></figure>
+<ol>
+<li>IoC容器执行流程</li>
+</ol>
+<p><img src="G:\BuildWeb\Resource\IoC容器执行流程.png" alt="image"></p>
+<ul>
+<li>首先是在配置文件中声明Bean的定义，为Bean配置元数据。</li>
+<li>由IoC容器的Bean Reader读取并解析配置文件，通过BeanDefinition配置元数据，IoC容器根据BeanDefinition进行实例化、配置以及组装Bean。</li>
+<li>由应用程序实例化IoC容器，得到Bean对象。</li>
+</ul>
+<ol>
+<li>小案例测试   </li>
+</ol>
+<ul>
+<li>创建接口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public interface IHelloSpring &#123;</div><div class="line">    public void sayHello();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>创建实现类</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class HelloSpringImpl implements IHelloSpring &#123;</div><div class="line">    void sayHello() &#123;</div><div class="line">        System.out.println(&quot;Hello Spring&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>配置文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</div><div class="line">       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</div><div class="line">       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;</div><div class="line">    &lt;bean id=&quot;hello&quot; class=&quot;com.study.hello.HelloSpringImpl&quot;&gt;&lt;/bean&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>编写测试代码</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class HelloSpringTest &#123;</div><div class="line"></div><div class="line">    @Test</div><div class="line">    public void test()&#123;</div><div class="line">        ApplicationContext context=</div><div class="line">                new ClassPathXmlApplicationContext(&quot;classpath:HelloSpring.xml&quot;);</div><div class="line">        //从容器中获取bean，面向接口编程</div><div class="line">        IHelloSpring hello = context.getBean(&quot;hello&quot;, IHelloSpring.class);</div><div class="line">        IHelloSpring hello1 = (IHelloSpring) context.getBean(&quot;hello&quot;);</div><div class="line">        hello.sayHello();</div><div class="line">        hello1.sayHello();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>小结</li>
+</ol>
+<p>在测试代码中除了程序的入口，其他的地方没有Spring的任何组件，也没有实现Spring框架的任何接口。在代码编写完全是面向接口编程的，使用时不需要知道接口的实现类，需要修改实现类时，可以通过配置文件进行修改。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/28/Hibernate回顾一/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -489,7 +673,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -500,7 +684,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categeries/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -511,7 +695,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
